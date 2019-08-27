@@ -10,6 +10,7 @@ process.env.DB_PORT = "5432";
 process.env.DB_DATABASE = "rueggerllc";
 const index = require("../src/index");
 
+// Basic Test
 describe("Test Handler", function() {
     this.timeout(10000);
     let context = {};
