@@ -12,6 +12,7 @@ const index = require("../src/index");
 
 // Comments here
 // Basic Test
+// Another comment
 describe("Test Handler", function() {
     this.timeout(10000);
     let context = {};
