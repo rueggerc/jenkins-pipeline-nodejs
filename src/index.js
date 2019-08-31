@@ -5,7 +5,7 @@ const dbutils = require('./dbutils');
 module.exports.handler = async function(event,context,callback) {
     try {
         console.log("Hello From Handler");
-       //  await dbutils.doDatabaseStuff();
+        await dbutils.doDatabaseStuff();
 
         let response = {
             statusCode: 200,
