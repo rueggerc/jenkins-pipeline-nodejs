@@ -9,7 +9,7 @@ module.exports.handler = async function(event,context,callback) {
 
         let response = {
             statusCode: 200,
-            body: `Hello from Lambda ${event.name}!`
+            body: `Hello Message from Lambda ${event.name}!`
         };
         return response;
     } catch (err) {
