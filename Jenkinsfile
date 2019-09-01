@@ -38,13 +38,16 @@ pipeline {
                             sh '''
                             psql --version
                             RETRIES=5
+                            export PGPASSWORD=dakota 
                             until psql -h localhost -U chris -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                             echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
                             sleep 10
                             done
                             '''
+                            // Run Integration Tests
+                            sh 'npm run test'
                         }
-                        sh 'npm run test'
+                       
                     }
                     
                 }
