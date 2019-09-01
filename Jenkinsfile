@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        POSTGRES_HOST = 'localhost'
         POSTGRES_USER = 'chris'
         POSTGRES_PASSWORD = 'dakota'
         POSTGRES_DB = 'rueggerllc'
