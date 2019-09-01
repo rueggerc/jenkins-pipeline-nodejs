@@ -34,8 +34,10 @@ pipeline {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc"') {c ->
+                        // sh 'psql --version'
+                        sh 'npm run test'
                     }
-                    sh 'npm run test'
+                    
                 }
             }
         }
