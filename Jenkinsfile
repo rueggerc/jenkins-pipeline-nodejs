@@ -40,7 +40,7 @@ pipeline {
                             RETRIES=5
                             until psql -h localhost -U chris -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                             echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
-                            sleep 1
+                            sleep 10
                             done
                             '''
                         }
