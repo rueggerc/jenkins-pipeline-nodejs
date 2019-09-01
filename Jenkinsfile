@@ -34,14 +34,7 @@ pipeline {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
-                        docker.image('rueggerc/postgres-it:1.0').inside("--link ${c.id}:db") {
-                            sh '''
-                            sleep 30
-                            PGPASSWORD=dakota psql -h localhost -U chris --dbname=rueggerllc -c "select * from dht22_readings"
-                            '''
-                            // Run Integration Tests
-                            sh 'npm run test'
-                        }
+                        sh 'sleep 30'
                         sh 'npm run test'
                     }
                     
