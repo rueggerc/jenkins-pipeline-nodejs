@@ -33,7 +33,7 @@ pipeline {
         stage ('Test') {
             steps {
                 script {
-                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=${env.POSTGRES_USER}" -e "POSTGRES_PASSWORD=${env.POSTGRES_PASSWORD}" -e "POSTGRES_DB=${POSTGRES_DB}"') {c ->
+                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=${env.POSTGRES_USER}" -e "POSTGRES_PASSWORD=${env.POSTGRES_PASSWORD}" -e "POSTGRES_DB=${env.POSTGRES_DB}"') {c ->
                     }
                     sh 'npm run test'
                 }
