@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_HOST=localhost" -e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
-                        sh 'sleep 30'
+                        sh 'sleep 120'
                         sh 'npm run test'
                     }
                     
