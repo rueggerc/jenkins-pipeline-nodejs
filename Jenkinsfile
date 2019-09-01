@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        POSTGRES_USER = 'chris'
+        POSTGRES_PASSWORD= 'dakota'
+        POSTGRES_DB = 'rueggerllc'
+    }
     stages {
         stage ('Build: Master') {
             when { 
@@ -21,13 +26,17 @@ pipeline {
                 echo 'Building non-master branch'
                 sh 'pwd'
                 sh 'npm install'
-                sh 'npm run test'
+                
                 // sh 'npm config ls'
             }
         }
         stage ('Test') {
             steps {
-                echo 'Running test stage...'
+                script {
+                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=${env.POSTGRES_USER}" -e "POSTGRES_PASSWORD=${env.POSTGRES_PASSWORD}" -e "POSTGRES_DB=${POSTGRES_DB}"') {c ->
+                    }
+                    sh 'npm run test'
+                }
             }
         }
         stage ('Deploy') {
