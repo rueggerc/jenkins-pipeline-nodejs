@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         POSTGRES_USER = 'chris'
-        POSTGRES_PASSWORD= 'dakota'
+        POSTGRES_PASSWORD = 'dakota'
         POSTGRES_DB = 'rueggerllc'
     }
     stages {
@@ -33,7 +33,7 @@ pipeline {
         stage ('Test') {
             steps {
                 script {
-                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris"') {c ->
+                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc"') {c ->
                     }
                     sh 'npm run test'
                 }
