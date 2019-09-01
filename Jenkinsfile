@@ -34,7 +34,16 @@ pipeline {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc"') {c ->
-                        sh 'psql --version'
+                        docker.image('rueggerc/postgres-it:1.0').inside("--link ${c.id}:db") {
+                            sh '''
+                            psql --version
+                            RETRIES=5
+                            until psql -h localhost -U chris -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+                            echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
+                            sleep 1
+                            done
+                            '''
+                        }
                         sh 'npm run test'
                     }
                     
