@@ -37,7 +37,7 @@ pipeline {
                 sh 'docker version'
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
-                        env.DB_HOST = hostname
+                        env.DB_HOST = ${hostIp(c)}
                         sh 'npm run test'
                     }
                 }
@@ -49,4 +49,9 @@ pipeline {
             }
         }
     }
+}
+
+def hostIp(container) {
+  sh "docker inspect -f {{.Node.Ip}} ${container.id} > hostIp"
+  readFile('hostIp').trim()
 }
