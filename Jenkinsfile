@@ -40,7 +40,7 @@ pipeline {
                         export PGPASSWORD=dakota 
                         until psql -h db -U chris -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
-                        sleep 4
+                        sleep 1
                         done
                         '''
                       }
