@@ -41,7 +41,7 @@ pipeline {
                             sh '''
                             sleep 30
                             hostname
-                            PGPASSWORD=dakota psql -h 127.0.0.1 -U chris --dbname=rueggerllc -c "select * from dht22_readings"
+                            PGPASSWORD=dakota psql -h db -U chris --dbname=rueggerllc -c "select * from dht22_readings"
                             '''
                             // Run Integration Tests
                             sh 'npm run test'
