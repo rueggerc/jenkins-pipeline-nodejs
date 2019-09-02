@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 
 // Environment Variables
 // process.env.DB_HOST = "localhost";
-process.env.DB_HOST = "db";
+// process.env.DB_HOST = "db";
 process.env.DB_USER = "chris";
 process.env.DB_PASSWORD = "dakota";
 process.env.DB_PORT = "5432";
