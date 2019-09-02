@@ -37,7 +37,7 @@ pipeline {
                 sh 'docker version'
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
-                        env.DB_HOST = ${hostIp(c)}
+                        echo ${c.id}
                         sh 'npm run test'
                     }
                 }
