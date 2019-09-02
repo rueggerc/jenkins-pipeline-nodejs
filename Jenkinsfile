@@ -36,7 +36,7 @@ pipeline {
                 echo 'Startup Docker Container'
                 sh 'docker version'
                 script {
-                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_HOST=localhost" -e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
+                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_HOST=127.0.0.1" -e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
                         sh 'sleep 10'
                         sh 'npm run test'
                     }
