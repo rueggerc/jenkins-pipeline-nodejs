@@ -34,10 +34,12 @@ pipeline {
                 echo 'Startup Docker Container'
                 sh 'docker version'
                 script {
+                    node {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
                         sleep 20
                         sh 'docker ps'
                         sh 'npm run test'
+                    }
                     }
                 }
             }
