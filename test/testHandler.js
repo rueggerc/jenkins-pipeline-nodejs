@@ -3,8 +3,8 @@ const assert = require('chai').assert;
 const expect = require('chai').expect;
 
 // Environment Variables
-process.env.DB_HOST = "localhost";
-// process.env.DB_HOST = "db";
+// process.env.DB_HOST = "localhost";
+process.env.DB_HOST = "localdb";
 process.env.DB_USER = "testuser";
 process.env.DB_PASSWORD = "testpwd";
 process.env.DB_PORT = "5432";

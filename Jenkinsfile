@@ -33,18 +33,18 @@ pipeline {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-h db -e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
-                      docker.image("rueggerc/postgres-it:1.0").inside("--link ${c.id}:localhost") {
+                      docker.image("rueggerc/postgres-it:1.0").inside("--link ${c.id}:localdb") {
                         sh '''
                         psql --version
                         RETRIES=5
                         export PGPASSWORD=testpwd 
-                        until psql -h localhost -U testuser -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+                        until psql -h localdb -U testuser -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
                         sleep 1
                         done
                         '''
                       }
-                      docker.image("node:10-alpine").inside("--link ${c.id}:localhost") {
+                      docker.image("node:10-alpine").inside("--link ${c.id}:localdb") {
                         sh 'npm run test'
                       }
                     }
