@@ -5,10 +5,10 @@ const expect = require('chai').expect;
 // Environment Variables
 process.env.DB_HOST = "localhost";
 // process.env.DB_HOST = "db";
-process.env.DB_USER = "chris";
-process.env.DB_PASSWORD = "dakota";
+process.env.DB_USER = "testuser";
+process.env.DB_PASSWORD = "testpwd";
 process.env.DB_PORT = "5432";
-process.env.DB_DATABASE = "rueggerllc";
+process.env.DB_DATABASE = "itdb";
 const index = require("../src/index");
 
 // Comments here
