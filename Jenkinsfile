@@ -33,6 +33,7 @@ pipeline {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.0').withRun('-h db -e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
+                      docker.image("rueggerc/postgres-it:1.0").inside("--link ${c.id}:db") {
                         sh '''
                         psql --version
                         RETRIES=5
@@ -42,6 +43,7 @@ pipeline {
                         sleep 4
                         done
                         '''
+                      }
                       docker.image("node:10-alpine").inside("--link ${c.id}:db") {
                         sh 'npm run test'
                       }
