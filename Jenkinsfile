@@ -3,8 +3,6 @@ pipeline {
     environment {
         POSTGRES_HOST = 'localhost'
         POSTGRES_USER = 'chris'
-        POSTGRES_PASSWORD = 'dakota'
-        POSTGRES_DB = 'rueggerllc'
     }
     stages {
         stage ('Build: Master') {
@@ -35,11 +33,11 @@ pipeline {
             steps {
                 echo 'Startup Docker Container'
                 sh 'docker version'
-                node ('postgres_node') {
-                docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
-                    sleep 10
-                    sh script 'npm run test'
-                }
+                script {
+                    docker.image('rueggerc/postgres-it:1.0').withRun('-e "POSTGRES_USER=chris" -e "POSTGRES_PASSWORD=dakota" -e "POSTGRES_DB=rueggerllc" -p 5432:5432') {c ->
+                        sleep 10
+                        sh 'npm run test'
+                    }
                 }
             }
         }
