@@ -37,7 +37,7 @@ pipeline {
                         sh 'docker ps'
                         sh 'docker network ls'
                         sh "docker logs ${c.id}"
-                        env.DB_HOST = ${c.id}
+                        env.DB_HOST = "${c.id}""
                         sh 'npm run test'
                     }
                 }
