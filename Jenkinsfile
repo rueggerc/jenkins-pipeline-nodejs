@@ -44,7 +44,7 @@ pipeline {
                             PGPASSWORD=dakota psql -h db -U chris --dbname=rueggerllc -c "select * from dht22_readings"
                             '''
                             // Run Integration Tests
-                            sh 'npm run test'
+                            // sh 'npm run test'
                         }
                         sh 'npm run test'
                     }

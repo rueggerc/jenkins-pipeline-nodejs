@@ -31,6 +31,7 @@ async function getSensorData(dbConfig) {
         let dbQuery = "select * from dht22_readings limit 10";
         let result = await db.query(dbQuery);
         let rows = result.rows;
+        console.log(JSON.stringify(rows,null,2));
 
     
         // Disconnect
