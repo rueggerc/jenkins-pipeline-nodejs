@@ -11,7 +11,7 @@ module.exports.doDatabaseStuff = async function() {
     for (let i = 0; i < rows.length; i++) {
         let reading = rows[i];
         // console.log(JSON.stringify(reading));
-        console.log(`Sensor: ${reading.sensor_id} Temperature: ${reading.temperature} Humidity: ${reading.humidity} Time: ${reading.reading_time}`);
+        console.log(`Sensor Data: ${reading.sensor_id} Temperature: ${reading.temperature} Humidity: ${reading.humidity} Time: ${reading.reading_time}`);
     }
 
     console.log("DO DATABASE STUFF END");
