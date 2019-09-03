@@ -10,7 +10,8 @@ module.exports.doDatabaseStuff = async function() {
     let rows = result.rows;
     for (let i = 0; i < rows.length; i++) {
         let reading = rows[i];
-        console.log(JSON.stringify(reading));
+        // console.log(JSON.stringify(reading));
+        console.log(`Sensor: ${reading.sensor_id} Temperature: ${reading.temperature} Humidity: ${reading.humidity} Time: ${reading.reading_time}`);
     }
 
     console.log("DO DATABASE STUFF END");
@@ -31,7 +32,7 @@ async function getSensorData(dbConfig) {
         let dbQuery = "select * from dht22_readings limit 10";
         let result = await db.query(dbQuery);
         let rows = result.rows;
-        console.log(JSON.stringify(rows,null,2));
+        // console.log(JSON.stringify(rows,null,2));
 
     
         // Disconnect
