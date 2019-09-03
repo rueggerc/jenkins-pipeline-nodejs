@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Simple NodeJS app",
   "main": "index.js",
+  "nyc": {},
   "scripts": {
-    "test": "node_modules/.bin/mocha 'test/test*.js'"
+    "test0": "node_modules/.bin/mocha 'test/test*.js'",
+    "test": "nyc --reporter=lcov node_modules/.bin/mocha 'test/test*.js'",
+    "sonar-scanner": "node_modules/.bin/sonar-scanner"
   },
   "repository": {
     "type": "git",
@@ -19,6 +22,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "mocha-sonarqube-reporter": "^1.0.1",
+    "nyc": "^14.1.1",
+    "sonar-scanner": "^3.1.0",
+    "sonarqube-scanner": "^2.5.0"
   }
 }
