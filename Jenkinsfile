@@ -46,6 +46,7 @@ pipeline {
                       }
                       docker.image("node:10-alpine").inside("--link ${c.id}:localdb") {
                         sh 'npm run test'
+                        sh 'npm run sonar-scanner'
                       }
                     }
                 }

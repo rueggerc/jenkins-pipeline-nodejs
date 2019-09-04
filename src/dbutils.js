@@ -8,12 +8,12 @@ module.exports.doDatabaseStuff = async function() {
    
     let result = await getSensorData(dbConfig);
     let rows = result.rows;
+    console.log("Sensor Data:");
     for (let i = 0; i < rows.length; i++) {
         let reading = rows[i];
         // console.log(JSON.stringify(reading));
         console.log(`Sensor Data: ${reading.sensor_id} Temperature: ${reading.temperature} Humidity: ${reading.humidity} Time: ${reading.reading_time}`);
     }
-
     console.log("DO DATABASE STUFF END");
 }
 
@@ -24,9 +24,9 @@ async function getSensorData(dbConfig) {
         let db = new PostgresUno();
         // console.log("DBConfig=\n" + JSON.stringify(dbConfig,null,2));
 
-        console.log("CONNECT BEGIN");
+        console.log("CONNECT TO DB BEGIN");
         await db.connect(dbConfig);
-        console.log("CONNECT END");
+        console.log("CONNECT TO DB END");
 
         // Query
         let dbQuery = "select * from dht22_readings limit 10";
