@@ -44,7 +44,7 @@ pipeline {
                         done
                         '''
                       }
-                      docker.image("node:10.16.3-jessie-slim").inside("--link ${c.id}:localdb") {
+                      docker.image("node:10.16.3-jessie").inside("--link ${c.id}:localdb") {
                         // node:10-alpine
                         sh 'npm run test'
                         sh 'npm run sonar-scanner'
