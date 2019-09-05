@@ -56,7 +56,7 @@ pipeline {
                 
             }
         }
-        stage ('SonarQube Analysis') {
+        stage ('SonarQube Analysis Stage') {
             when { 
                 not { 
                   branch 'master'
