@@ -3,6 +3,7 @@ pipeline {
     environment {
         POSTGRES_HOST = 'localhost'
         POSTGRES_USER = 'chris'
+        POSTGRES_FOO = "foo"
     }
     stages {
         stage ('Build: Master') {
