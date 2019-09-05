@@ -9,12 +9,14 @@ module.exports.handler = async function(event,context,callback) {
 
         let response = {
             statusCode: 200,
-            body: `Updated Hello Message from Lambda ${event.name}!`
+            body: `Here is Reply Message Hello Message from Lambda ${event.name}!`
         };
         return response;
     } catch (err) {
         console.log("ERROR:" + err);
         return buildErrorResponse();
+    } finally {
+        
     }
 }
 
