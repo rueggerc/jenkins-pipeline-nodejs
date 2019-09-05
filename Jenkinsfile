@@ -1,6 +1,8 @@
 pipeline {
     agent any
     environment {
+        POSTGRES_HOST = 'localhost'
+        POSTGRES_USER = 'chris'
     }
     stages {
         stage ('Build: Master') {
