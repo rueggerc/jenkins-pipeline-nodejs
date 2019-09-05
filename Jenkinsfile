@@ -49,10 +49,21 @@ pipeline {
                         sh 'npm run test'
                       }
                     }
-                    
-                    sh 'npm run sonar-scanner'
+
+                   
                 }
                 
+            }
+        }
+        stage ('SonarQube Analysis') {
+            when { 
+                not { 
+                  branch 'master'
+                }
+            }
+            steps {
+                echo 'Sonar Scan non-master branch'
+                sh 'npm run sonar-scanner'
             }
         }
         stage ('Deploy') {
