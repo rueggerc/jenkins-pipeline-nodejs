@@ -56,15 +56,33 @@ pipeline {
                 
             }
         }
-        stage ('SonarQube Analysis Stage') {
+        stage ('SonarQube Scan Stage') {
             when { 
                 not { 
                   branch 'master'
                 }
             }
             steps {
-                echo 'Sonar Scan non-master branch'
-                sh 'npm run sonar-scanner'
+                withSonarQubeEnv('sonarqube') {
+                    // sh "${scannerHome}/bin/sonar-scanner"
+                    sh 'npm run sonar-scanner'
+                }
+                // echo 'Sonar Scan non-master branch'
+                // sh 'npm run sonar-scanner'
+            }
+        }
+        stage ('SonarQube Quality Gate Stage') {
+            when { 
+                not { 
+                  branch 'master'
+                }
+            }
+            steps {
+                timeout(time: 1, unit: 'HOURS')
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                }
             }
         }
         stage ('Deploy') {
