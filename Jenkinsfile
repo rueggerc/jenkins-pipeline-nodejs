@@ -52,6 +52,10 @@ pipeline {
                       }
                     }
 
+                    // List Things
+                    echo "LIST EVERYTHING AFTER TESTS BEGIN"
+                    sh 'chmod +x build/build.sh && npm run shell-stuff'
+                    echo "LIST EVERYTHING AFTER TESTS END"
                    
                 }
                 
