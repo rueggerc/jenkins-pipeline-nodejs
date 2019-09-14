@@ -33,8 +33,8 @@ pipeline {
         stage ('Test') {
             steps {
                 script {
-                    docker.image('rueggerc/postgres-it:1.2').withRun('-e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
-                      docker.image("rueggerc/postgres-it:1.2").inside("--link ${c.id}:localdb") {
+                    docker.image('rueggerc/postgres-it:1.4').withRun('-e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
+                      docker.image("rueggerc/postgres-it:1.4").inside("--link ${c.id}:dbhost") {
                         sh '''
                         psql --version
                         RETRIES=5
