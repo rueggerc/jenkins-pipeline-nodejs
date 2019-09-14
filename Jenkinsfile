@@ -47,7 +47,7 @@ pipeline {
                         // sh 'npm run pipeline-test'
                         echo "RUN TESTS"
                         sh 'npm run test'
-                        sh 'npm run shell-stuff'
+                        sh 'chmod +x build/build..sh && npm run shell-stuff'
                         sh 'npm run sonar-scanner'
                       }
                     }
