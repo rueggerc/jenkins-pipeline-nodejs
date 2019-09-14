@@ -44,8 +44,9 @@ pipeline {
                         sleep 1
                         done
                         '''
-                        sh 'npm run pipeline-test'
-                        sh 'npm run sonar-scanner'
+                        // sh 'npm run pipeline-test'
+                        sh 'sudo npm run test'
+                        sh 'sudo npm run sonar-scanner'
                       }
                     }
 
