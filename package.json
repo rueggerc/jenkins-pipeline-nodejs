@@ -8,7 +8,7 @@
     "test0": "node_modules/.bin/mocha 'test/test*.js'",
     "test": "SPAWN_WRAP_SHIM_ROOT=. nyc --reporter=lcov node_modules/.bin/mocha 'test/test*.js'",
     "pipeline-test": "node_modules/.bin/mocha --recursive test",
-    "sonar-scanner": "node_modules/.bin/sonar-scanner"
+    "sonar-scanner": "SPAWN_WRAP_SHIM_ROOT=. node_modules/.bin/sonar-scanner"
   },
   "repository": {
     "type": "git",
