@@ -11,11 +11,6 @@ process.env.DB_PORT = "5432";
 process.env.DB_DATABASE = "itdb";
 const index = require("../src/index");
 
-// Comments here
-// Basic Test
-// Another comment
-// Another
-// more comments
 describe("Test Handler", function() {
     this.timeout(10000);
     let context = {};

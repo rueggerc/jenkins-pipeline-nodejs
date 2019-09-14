@@ -45,6 +45,7 @@ pipeline {
                         done
                         '''
                         sh 'npm run pipeline-test'
+                        sh 'npm run sonar-scanner'
                       }
                     }
 

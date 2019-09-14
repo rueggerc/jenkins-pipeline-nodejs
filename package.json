@@ -7,7 +7,7 @@
   "scripts": {
     "test0": "node_modules/.bin/mocha 'test/test*.js'",
     "test": "nyc --reporter=lcov node_modules/.bin/mocha 'test/test*.js'",
-    "pipeline-test": "nyc --reporter=lcov node_modules/.bin/mocha 'test/test*.js'",
+    "pipeline-test": "node_modules/.bin/mocha --recursive test",
     "sonar-scanner": "node_modules/.bin/sonar-scanner"
   },
   "repository": {
