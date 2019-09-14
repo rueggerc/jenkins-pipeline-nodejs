@@ -45,8 +45,9 @@ pipeline {
                         done
                         '''
                         // sh 'npm run pipeline-test'
-                        sh 'sudo npm run test'
-                        sh 'sudo npm run sonar-scanner'
+                        echo "RUN TESTS"
+                        sh 'npm run test'
+                        sh 'npm run sonar-scanner'
                       }
                     }
 
