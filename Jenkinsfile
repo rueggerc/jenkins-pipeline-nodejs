@@ -1,9 +1,7 @@
 pipeline {
     agent any
     environment {
-        POSTGRES_HOST = 'localhost'
-        POSTGRES_USER = 'chris'
-        POSTGRES_FOO = "foo"
+        JOB_NAME = "Build Jenkins Pipeline for NodeJS"
     }
     stages {
         stage ('Build: Master') {
@@ -26,8 +24,6 @@ pipeline {
                 echo 'Building non-master branch'
                 sh 'pwd'
                 sh 'npm install'
-                
-                // sh 'npm config ls'
             }
         }
         stage ('Test') {
@@ -46,13 +42,12 @@ pipeline {
                         '''
                         // sh 'npm run pipeline-test'
                         echo "RUN TESTS"
-                        sh 'npm run test'
+                        sh 'npm run tests-in-pipeline'
                         sh 'chmod +x build/build.sh && npm run shell-stuff'
-                        // sh 'npm run sonar-scanner'
                       }
                     }
 
-                    // List Things
+                    // List Files in workspace
                     echo "LIST EVERYTHING AFTER TESTS BEGIN"
                     sh 'chmod +x build/build.sh && npm run shell-stuff'
                     echo "LIST EVERYTHING AFTER TESTS END"
@@ -81,14 +76,8 @@ pipeline {
             }
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    // Webhook must be setup in Sonar!
+                    // Note: Webhook to Jenkins must be setup in Sonar!
                     waitForQualityGate abortPipeline: true
-                    // script {
-                    //     def qg = waitForQualityGate()
-                    //     if (qg.status != 'OK') {
-                    //       error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    //     }
-                    // }
                 }
             }
         }

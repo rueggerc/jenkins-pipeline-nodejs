@@ -5,6 +5,7 @@ const dbutils = require('./dbutils');
 module.exports.handler = async function(event,context,callback) {
     try {
         console.log("Hello From Handler");
+        console.log("JOB NAME=" + process.env.JOB_NAME);
         await dbutils.doDatabaseStuff();
 
         let response = {
