@@ -68,7 +68,7 @@ pipeline {
                 }
             }
             steps {
-                withSonarQubeEnv('sonarqube') {
+                withSonarQubeEnv('kube-sonar-server') {
                     // sh "${scannerHome}/bin/sonar-scanner"
                     sh 'npm run sonar-scanner'
                 }
