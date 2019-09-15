@@ -27,6 +27,6 @@ describe("Test Handler", function() {
         }
         let response = await index.handler(event,null,null);
         console.log("Response=\n" + JSON.stringify(response,null,2));
-        assert.equal(response.statusCode,404);
+        assert.equal(response.statusCode,200);
     });
 });
