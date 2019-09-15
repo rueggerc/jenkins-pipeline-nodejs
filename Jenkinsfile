@@ -4,7 +4,7 @@ pipeline {
         JOB_NAME = "Build Jenkins Pipeline for NodeJS"
     }
     stages {
-        stage ('Build: Master') {
+        stage ('Build Master Branch') {
             when { 
                 branch 'master'
             }
@@ -14,7 +14,7 @@ pipeline {
                 sh 'npm run test'
             }
         }
-        stage ('Build: Dev') {
+        stage ('Build Feature Branch') {
             when { 
                 not { 
                   branch 'master'
@@ -29,7 +29,7 @@ pipeline {
         stage ('Test') {
             steps {
                 script {
-                    docker.image('rueggerc/postgres-it:1.4').withRun('-u root -e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
+                    docker.image('rueggerc/postgres-it:1.4').withRun('-e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
                       docker.image("rueggerc/postgres-it:1.4").inside("--link ${c.id}:dbhost") {
                         sh '''
                         psql --version
