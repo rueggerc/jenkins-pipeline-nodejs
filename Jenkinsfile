@@ -83,7 +83,7 @@ pipeline {
                 }
             }
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                     // def qg = waitForQualityGate()
                     // if (qg.status != 'OK') {
