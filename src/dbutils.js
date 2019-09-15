@@ -17,11 +17,11 @@ module.exports.doDatabaseStuff = async function() {
 }
 
 async function getSensorData(dbConfig) {
+    let db = undefined;
     try {
 
         console.log("getSensorData BEGIN");
-        let db = new PostgresUno();
-        // console.log("DBConfig=\n" + JSON.stringify(dbConfig,null,2));
+        db = new PostgresUno();
 
         console.log("CONNECT TO DB BEGIN");
         await db.connect(dbConfig);
@@ -30,26 +30,20 @@ async function getSensorData(dbConfig) {
         // Query
         let dbQuery = "select * from dht22_readings limit 10";
         let result = await db.query(dbQuery);
-        // let rows = result.rows;
-        // console.log(JSON.stringify(rows,null,2));
-
-    
-        // Disconnect
-        await db.disconnect();
-
+   
+        // Done
         return result;
 
     } catch (err) {
         console.log("ERROR=" + err);
         throw new Error(err);
-    } 
+    } finally {
+        await db.disconnect();
+    }
 }
-
-
 
 function builddbConfig() {
     let db_host = process.env.DB_HOST || throwError("Not Set: DB_HOST");
-    // let db_host = "localhost";
     let db_user = process.env.DB_USER || throwError("Not Set: DB_USER");
     let db_password = process.env.DB_PASSWORD || throwError("Not Set: DB_PASSWORD");
     let db_port = process.env.DB_PORT || throwError("Not Set: DB_PORT");
