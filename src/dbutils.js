@@ -49,6 +49,7 @@ async function getSensorData(dbConfig) {
 
 function builddbConfig() {
     let db_host = process.env.DB_HOST || throwError("Not Set: DB_HOST");
+    // let db_host = "localhost";
     let db_user = process.env.DB_USER || throwError("Not Set: DB_USER");
     let db_password = process.env.DB_PASSWORD || throwError("Not Set: DB_PASSWORD");
     let db_port = process.env.DB_PORT || throwError("Not Set: DB_PORT");
