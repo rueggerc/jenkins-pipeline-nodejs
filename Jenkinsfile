@@ -39,7 +39,7 @@ pipeline {
                         psql --version
                         RETRIES=5
                         export PGPASSWORD=testpwd 
-                        until psql -h localdb -U testuser -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+                        until psql -h dbhost -U testuser -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
                         sleep 1
                         done
@@ -69,11 +69,8 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('kube-sonar-server') {
-                    // sh "${scannerHome}/bin/sonar-scanner"
                     sh 'npm run sonar-scanner'
                 }
-                // echo 'Sonar Scan non-master branch'
-                // sh 'npm run sonar-scanner'
             }
         }
         stage ('SonarQube Quality Gate Stage') {
@@ -84,11 +81,11 @@ pipeline {
             }
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                    // def qg = waitForQualityGate()
-                    // if (qg.status != 'OK') {
-                    //    error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    // }
+                    // waitForQualityGate abortPipeline: true
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
                 }
             }
         }
