@@ -20,6 +20,7 @@ async function getSensorData(dbConfig) {
     try {
 
         let x = 42;
+        let y = 43;
 
         console.log("getSensorData BEGIN");
         let db = new PostgresUno();
