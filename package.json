@@ -8,7 +8,7 @@
     "full-tests": "set DB_HOST=localhost && npm run test",
     "test0": "node_modules/.bin/mocha 'test/test*.js'",
     "test": "nyc --reporter=lcov node_modules/.bin/mocha 'test/'",
-    "tests-in-pipeline": "SPAWN_WRAP_SHIM_ROOT=. nyc --reporter=lcov node_modules/.bin/mocha 'test/test*.js'",
+    "tests-in-pipeline": "SPAWN_WRAP_SHIM_ROOT=. nyc --reporter=lcov node_modules/.bin/mocha 'test/'",
     "pipeline-test-old": "node_modules/.bin/mocha --recursive test",
     "shell-stuff": "./build/build.sh",
     "sonar-scanner": "SPAWN_WRAP_SHIM_ROOT=. node_modules/.bin/sonar-scanner"
