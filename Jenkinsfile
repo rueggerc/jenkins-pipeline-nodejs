@@ -81,13 +81,14 @@ pipeline {
             }
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    script {
-                    // waitForQualityGate abortPipeline: true
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                        }
-                    }
+                    // Webhook must be setup in Sonar!
+                    waitForQualityGate abortPipeline: true
+                    // script {
+                    //     def qg = waitForQualityGate()
+                    //     if (qg.status != 'OK') {
+                    //       error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    //     }
+                    // }
                 }
             }
         }
