@@ -5,7 +5,6 @@ module.exports.doDatabaseStuff = async function() {
 
     console.log("DO DATABASE STUFF BEGIN");
     let dbConfig = builddbConfig();
-   
     let result = await getSensorData(dbConfig);
     let rows = result.rows;
     console.log("Sensor Data:");
@@ -17,7 +16,7 @@ module.exports.doDatabaseStuff = async function() {
 }
 
 async function getSensorData(dbConfig) {
-    let db = undefined;
+    let db = null;
     try {
 
         console.log("getSensorData BEGIN");
@@ -29,10 +28,7 @@ async function getSensorData(dbConfig) {
 
         // Query
         let dbQuery = "select * from dht22_readings limit 10";
-        let result = await db.query(dbQuery);
-   
-        // Done
-        return result;
+        return await db.query(dbQuery);
 
     } catch (err) {
         console.log("ERROR=" + err);
