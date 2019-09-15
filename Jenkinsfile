@@ -26,7 +26,7 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage ('Test') {
+        stage ('Run Tests') {
             steps {
                 script {
                     docker.image('rueggerc/postgres-it:1.4').withRun('-e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
@@ -56,7 +56,7 @@ pipeline {
                 
             }
         }
-        stage ('SonarQube Scan Stage') {
+        stage ('Run SonarQube Scan') {
             when { 
                 not { 
                   branch 'master'
@@ -68,7 +68,7 @@ pipeline {
                 }
             }
         }
-        stage ('SonarQube Quality Gate Stage') {
+        stage ('Check SonarQube Quality Gate') {
             when { 
                 not { 
                   branch 'master'
@@ -81,7 +81,7 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy') {
+        stage ('Deploy App') {
             steps {
                 echo 'Running deploy stage...'
             }

@@ -19,9 +19,6 @@ module.exports.doDatabaseStuff = async function() {
 async function getSensorData(dbConfig) {
     try {
 
-        // let x = 42;
-        let y = 43;
-
         console.log("getSensorData BEGIN");
         let db = new PostgresUno();
         // console.log("DBConfig=\n" + JSON.stringify(dbConfig,null,2));
@@ -45,9 +42,7 @@ async function getSensorData(dbConfig) {
     } catch (err) {
         console.log("ERROR=" + err);
         throw new Error(err);
-    } finally {
-
-    }
+    } 
 }
 
 
