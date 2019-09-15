@@ -15,9 +15,7 @@ module.exports.handler = async function(event,context,callback) {
     } catch (err) {
         console.log("ERROR:" + err);
         return buildErrorResponse();
-    } finally {
-        
-    }
+    } 
 }
 
 function buildErrorResponse(err) {
