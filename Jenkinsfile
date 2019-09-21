@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         JOB_NAME = "Build Jenkins Pipeline for NodeJS"
+        DB_HOST = "dbhost"
     }
     stages {
         stage ('Build Master Branch') {
@@ -35,7 +36,7 @@ pipeline {
                         psql --version
                         RETRIES=5
                         export PGPASSWORD=testpwd 
-                        until psql -h dbhost -U testuser -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+                        until psql -h dbhost -U testuser -d itdb -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
                         sleep 1
                         done

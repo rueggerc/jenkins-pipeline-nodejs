@@ -9,49 +9,6 @@ const testDBUtils = require("./testDBUtils");
 const dbutils = require("../src/dbutils");
 
 let sandbox = null;
-// beforeEach(function() {
-//     console.log("=== BEFORE =====");
-//     sandbox = sinon.createSandbox();
-//     sinon.stub(dbutils, 'doDatabaseStuff').callsFake(() => {
-//         console.log("DO DATABASE STUFF STUB!");
-//     });
-
-//     // sinon.stub(dbutils, 'getSensorData').callsFake(function(dbConfig) {
-//     //     console.log("GET SENSOR DATA STUB!");
-//     //     let result = {
-//     //         rows: []
-//     //     }
-//     //     return result;
-//     // });
-
-//     // sinon.stub(dbutils, 'getSensorData').callsFake(function(dbConfig)  {
-//     //     console.log("GET SENSOR DATA STUB");
-//     // });
-
-// });
-
-// afterEach(function() {
-//     console.log("=== AFTER =====");
-//     sandbox.restore();
-// });
-
-
-// before(async function() {
-//     console.log("=== BEFORE.1 =====");
-//     let parms = {
-//         sensorID: "Sensor1"
-//     };
-//     return await executeSQL(setupData,parms);
-// });
-// after(async function() {
-//     console.log("== AFTER.1 =====");
-//     let parms = {
-//         sensorID: "Sensor1"
-//     };
-//     return await executeSQL(cleanupData,parms);
-   
-// });
-
 
 describe("Test Handler", function() {
     this.timeout(60000);
@@ -75,9 +32,9 @@ describe("Test Handler", function() {
     beforeEach(function() {
         console.log("=== BEFORE EACH =====");
         sandbox = sinon.createSandbox();
-        sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
-            console.log("DO DATABASE STUFF STUB!");
-        });
+        // sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
+        //     console.log("DO DATABASE STUFF STUB!");
+        // });
     });
     
     afterEach(function() {
@@ -107,6 +64,7 @@ describe("Test Handler", function() {
         }).finally(done);
     });
 });
+
 
 async function cleanupData(db,parms) {
     console.log("==== CLEANUP DATA===");
