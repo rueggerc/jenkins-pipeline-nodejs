@@ -102,49 +102,12 @@ async function cleanupData(db,parms) {
         let dbQuery = `
           DELETE FROM dht22_readings
           WHERE sensor_id = '${parms.sensorID}' `;
-        await db.query(dbQuery);
-
-    
+        return await db.query(dbQuery);
     } catch (err) {
         console.log("ERROR=" + err);
         throw new Error(err);
     } 
 }
-
-// async function insertSensorData() {
-//     let db = null;
-//     try {
-//         db = new PostgresUno();
-//         let dbConfig = {
-//             host: "localhost",
-//             user: "testuser",
-//             password: "testpwd",
-//             port: 5432,
-//             database: "itdb"
-//         };
-//         await db.connect(dbConfig);
-
-//         let sensor_id = "Sensor1";
-//         let notes = "Notes";
-//         let reading_time = null;
-//         let temperature = 78.33;
-//         let humidity = 81.99;
-
-//         console.log("==== INSERT SETUP DATA===");
-//         // Query
-//         let dbQuery = `
-//           insert into dht22_readings
-//           (sensor_id, notes, reading_time, temperature, humidity)
-//           values ('${sensor_id}', '${notes}', ${reading_time}, ${temperature}, ${humidity})`;
-//         console.log(dbQuery);
-//         await db.query(dbQuery);
-//     } catch (err) {
-//         console.log("ERROR=" + err);
-//         throw new Error(err);
-//     } finally {
-//         await db.disconnect();
-//     }
-// }
 
 async function setupData(db,parms) {
     try {
@@ -159,7 +122,7 @@ async function setupData(db,parms) {
           insert into dht22_readings
           (sensor_id, notes, reading_time, temperature, humidity)
           values ('${parms.sensorID}', '${notes}', ${reading_time}, ${temperature}, ${humidity})`;
-        await db.query(dbQuery);
+       return await db.query(dbQuery);
     } catch (err) {
         console.log("ERROR=" + err);
         throw new Error(err);
