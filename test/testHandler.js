@@ -53,6 +53,7 @@ after(async function() {
 
 
 describe("Test Handler", function() {
+    this.timeout(10000);
 
     beforeEach(function() {
         console.log("=== BEFORE EACH =====");
