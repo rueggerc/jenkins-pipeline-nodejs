@@ -35,25 +35,41 @@ let sandbox = null;
 // });
 
 
-before(async function() {
-    console.log("=== BEFORE.1 =====");
-    let parms = {
-        sensorID: "Sensor1"
-    };
-    return await executeSQL(setupData,parms);
-});
-after(async function() {
-    console.log("== AFTER.1 =====");
-    let parms = {
-        sensorID: "Sensor1"
-    };
-    return await executeSQL(cleanupData,parms);
+// before(async function() {
+//     console.log("=== BEFORE.1 =====");
+//     let parms = {
+//         sensorID: "Sensor1"
+//     };
+//     return await executeSQL(setupData,parms);
+// });
+// after(async function() {
+//     console.log("== AFTER.1 =====");
+//     let parms = {
+//         sensorID: "Sensor1"
+//     };
+//     return await executeSQL(cleanupData,parms);
    
-});
+// });
 
 
 describe("Test Handler", function() {
-    this.timeout(10000);
+    this.timeout(60000);
+
+    before(async function() {
+        console.log("=== BEFORE.1 =====");
+        let parms = {
+            sensorID: "Sensor1"
+        };
+        return await executeSQL(setupData,parms);
+    });
+    after(async function() {
+        console.log("== AFTER.1 =====");
+        let parms = {
+            sensorID: "Sensor1"
+        };
+        return await executeSQL(cleanupData,parms);
+       
+    });
 
     beforeEach(function() {
         console.log("=== BEFORE EACH =====");
@@ -61,7 +77,6 @@ describe("Test Handler", function() {
         sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
             console.log("DO DATABASE STUFF STUB!");
         });
-    
     });
     
     afterEach(function() {
@@ -71,7 +86,7 @@ describe("Test Handler", function() {
 
 
 
-    it("Handler Test 1", function (done) {
+    it("Handler Test 1", (done) => {
         let event = {
             name: 'Fred'
         }
@@ -82,7 +97,7 @@ describe("Test Handler", function() {
         }).finally(done);
     });
 
-    it("Handler Test 2", function(done) {
+    it("Handler Test 2", (done) => {
         let event = {
             name: 'Barney'
         }
