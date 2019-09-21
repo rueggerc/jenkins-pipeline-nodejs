@@ -40,16 +40,15 @@ before(async function() {
     let parms = {
         sensorID: "Sensor1"
     };
-    await executeSQL(setupData,parms);
-    console.log("=== BEFORE.2 =====");
+    return await executeSQL(setupData,parms);
 });
 after(async function() {
     console.log("== AFTER.1 =====");
     let parms = {
         sensorID: "Sensor1"
     };
-    await executeSQL(cleanupData,parms);
-    console.log("== AFTER.2 =====");
+    return await executeSQL(cleanupData,parms);
+   
 });
 
 
