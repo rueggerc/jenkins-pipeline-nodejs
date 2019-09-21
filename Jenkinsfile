@@ -40,6 +40,7 @@ pipeline {
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
                         sleep 1
                         done
+                        echo "Connected to DB after retries: $(RETRIES)"
                         '''
                         // sh 'npm run pipeline-test'
                         echo "RUN TESTS"
