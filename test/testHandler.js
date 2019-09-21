@@ -36,20 +36,20 @@ let sandbox = null;
 
 
 before(async function() {
-    console.log("=== BEFORE BEGIN =====");
-    // await insertSensorData();
+    console.log("=== BEFORE.1 =====");
     let parms = {
         sensorID: "Sensor1"
     };
     await executeSQL(setupData,parms);
-    console.log("=== BEFORE END =====");
+    console.log("=== BEFORE.2 =====");
 });
 after(async function() {
+    console.log("== AFTER.1 =====");
     let parms = {
         sensorID: "Sensor1"
     };
     await executeSQL(cleanupData,parms);
-    console.log("=== AFTER=====");
+    console.log("== AFTER.2 =====");
 });
 
 
@@ -71,7 +71,7 @@ describe("Test Handler", function() {
 
 
 
-    it("Handler Test 1", async function() {
+    it("Handler Test 1", function (done) {
         let event = {
             name: 'Fred'
         }
@@ -79,10 +79,11 @@ describe("Test Handler", function() {
           .then(function(response) {
             console.log("Response=\n" + JSON.stringify(response,null,2));
             assert.equal(response.statusCode,200);
+            done();
         });
     });
 
-    it("Handler Test 2", async function() {
+    it("Handler Test 2", function(done) {
         let event = {
             name: 'Barney'
         }
@@ -90,6 +91,7 @@ describe("Test Handler", function() {
           .then(function(response) {
             console.log("Response=\n" + JSON.stringify(response,null,2));
             assert.equal(response.statusCode,200);
+            done();
         });
     });
 });
@@ -158,7 +160,6 @@ async function setupData(db,parms) {
           insert into dht22_readings
           (sensor_id, notes, reading_time, temperature, humidity)
           values ('${parms.sensorID}', '${notes}', ${reading_time}, ${temperature}, ${humidity})`;
-        console.log(dbQuery);
         await db.query(dbQuery);
     } catch (err) {
         console.log("ERROR=" + err);
