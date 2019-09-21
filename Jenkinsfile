@@ -39,7 +39,7 @@ pipeline {
                         export PGPASSWORD=testpwd 
                         until psql -h dbhost -U testuser -d itdb -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
-                        $CONNECT_ATTEMPT+=1
+                        $((CONNECT_ATTEMPT+=1))
                         sleep 1
                         done
                         error 'Failed to build: Could not connect to Test Database'
