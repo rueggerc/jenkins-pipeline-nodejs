@@ -4,7 +4,8 @@ const expect = require('chai').expect;
 const index = require("../src/index");
 
 const sinon = require("sinon");
-const PostgresUno = require('postgres-uno');
+// const PostgresUno = require('postgres-uno');
+const testDBUtils = require("./testDBUtils");
 const dbutils = require("../src/dbutils");
 
 let sandbox = null;
@@ -60,14 +61,14 @@ describe("Test Handler", function() {
         let parms = {
             sensorID: "Sensor1"
         };
-        return await executeSQL(setupData,parms);
+        return await testDBUtils.executeSQL(setupData,parms);
     });
     after(async function() {
         console.log("== AFTER.1 =====");
         let parms = {
             sensorID: "Sensor1"
         };
-        return await executeSQL(cleanupData,parms);
+        return await testDBUtils.executeSQL(cleanupData,parms);
        
     });
 
@@ -83,8 +84,6 @@ describe("Test Handler", function() {
         console.log("=== AFTER EACH =====");
         sandbox.restore();
     });
-
-
 
     it("Handler Test 1", (done) => {
         let event = {
@@ -143,37 +142,3 @@ async function setupData(db,parms) {
     } 
 }
 
-async function executeSQL(sqlfunction,parms) {
-    let db = null;
-    try {
-        db = new PostgresUno();
-        let dbConfig = {
-            host: "localhost",
-            user: "testuser",
-            password: "testpwd",
-            port: 5432,
-            database: "itdb"
-        };
-        await db.connect(dbConfig);
-
-        // BEGIN
-        await db.query("BEGIN");
-
-        // Execute
-        let result = await sqlfunction(db,parms);
-
-        // Commit
-        await db.query("COMMIT");
-
-        // Done
-        return result;
-
-    } catch (err) {
-        let msg = `ROLL BACK TRANSACTION: ${err.toString()}`;
-        console.log("msg");
-        await db.query("ROLLBACK");
-        return msg;
-    } finally {
-        await db.disconnect();
-    }
-}
