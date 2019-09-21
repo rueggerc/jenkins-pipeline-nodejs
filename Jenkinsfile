@@ -42,7 +42,7 @@ pipeline {
                         $CONNECT_ATTEMPT+=1
                         sleep 1
                         done
-                        error('Failed to build: Could not connect to Test Database')
+                        error 'Failed to build: Could not connect to Test Database'
                         echo "Connected to DB after retries: $CONNECT_ATTEMPT"
                         '''
                         // sh 'npm run pipeline-test'
