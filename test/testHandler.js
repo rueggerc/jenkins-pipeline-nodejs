@@ -78,8 +78,7 @@ describe("Test Handler", function() {
           .then(function(response) {
             console.log("Response=\n" + JSON.stringify(response,null,2));
             assert.equal(response.statusCode,200);
-            done();
-        });
+        }).finally(done);
     });
 
     it("Handler Test 2", function(done) {
@@ -90,8 +89,7 @@ describe("Test Handler", function() {
           .then(function(response) {
             console.log("Response=\n" + JSON.stringify(response,null,2));
             assert.equal(response.statusCode,200);
-            done();
-        });
+        }).finally(done);
     });
 });
 
