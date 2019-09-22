@@ -15,6 +15,7 @@ module.exports.getSensorData = async function(parms) {
         };
         console.log(`Connecting to Service at: ${endpoint}`);
         let serviceResponse = await requestPromise(options);
+        console.log("Client: Got Response=\n" + JSON.stringify(serviceResponse,null,2));
         response.statusCode = serviceResponse.statusCode;
         response.body = serviceResponse.body;
     } catch (err) {

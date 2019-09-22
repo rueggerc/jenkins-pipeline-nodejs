@@ -59,7 +59,7 @@ describe("Test Handler", function() {
         }).finally(done);
     });
 
-    xit("Handler Test 2", (done) => {
+    it("Handler Test 2", (done) => {
         let event = {
             name: 'Barney'
         }

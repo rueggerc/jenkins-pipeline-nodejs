@@ -4,11 +4,10 @@ const index = require("../src/index");
 const sinon = require("sinon");
 const serviceClient = require("../src/serviceClient");
 
-// let requestPromise = sinon.stub().returns({ promise: () => Promise.resolve() });
+// const requestPromise = sinon.stub().returns({ promise: () => Promise.resolve() });
+const requestPromise = require('request-promise');
 
 let sandbox = null;
-// let requestPromise = null;
-
 describe("Test Service Client", function() {
     // this.timeout(60000);
 
@@ -28,27 +27,10 @@ describe("Test Service Client", function() {
     beforeEach(function() {
         console.log("=== TestServiceClient BEFORE EACH =====");
         sandbox = sinon.createSandbox();
-        // sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
-        //     console.log("DO DATABASE STUFF STUB!");
-        // });
-
-        // sandbox.stub(request,'get').callsFake((options) => {
-        //     console.log("STUB FOR REQUEST PROMISE");// 
-        //     let response = {
-        //         statusCode: 200,
-        //         body: "This is False Information"
-        //     };
-        // });
-
-        // sandbox.stub(requestPromise,'Constructor').callsFake((options) => {
-        //     console.log("STUB FOR REQUEST PROMISE");
-        //     let response = {
-        //         statusCode: 200,
-        //         body: "This is False Information"
-        //     };
-        // });
-            
-        // requestPromise = sandbox.stub().returns({ promise: () => Promise.resolve() });
+        sandbox.stub(requestPromise, 'Request').resolves({
+            statusCode: 200,
+            body: "Dummy Response"
+        }); 
     });
     
     afterEach(function() {
@@ -56,15 +38,21 @@ describe("Test Service Client", function() {
         sandbox.restore();
     });
 
-    xit("Service Client Get Sensor Data", (done) => {
+    it("Service Client Get Sensor Data", (done) => {
+        // sandbox.stub(requestPromise, 'Request').resolves({
+        //     statusCode: 200,
+        //     body: "Dummy Response"
+        // }); 
+        // done();
         let parms = {
         };
-        done();
-        // serviceClient.getSensorData(parms)
-        //   .then(function(response) {
-        //     console.log("Response=\n" + JSON.stringify(response,null,2));
-        //     assert.equal(response.statusCode,200);
-        // }).finally(done);
+        serviceClient.getSensorData(parms)
+            .then(function(response) {
+            console.log("Response=\n" + JSON.stringify(response,null,2));
+            assert.equal(response.statusCode,200);
+            assert.equal(response.body,'Dummy Response');
+            console.log("Asserts Done");
+        }).finally(done);
     });
 
 
