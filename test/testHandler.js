@@ -4,12 +4,11 @@ const expect = require('chai').expect;
 const index = require("../src/index");
 
 const sinon = require("sinon");
-// const PostgresUno = require('postgres-uno');
 const testDBUtils = require("./testDBUtils");
 const dbutils = require("../src/dbutils");
+const serviceClient = require("../src/serviceClient");
 
 let sandbox = null;
-
 describe("Test Handler", function() {
     this.timeout(60000);
 
@@ -32,9 +31,16 @@ describe("Test Handler", function() {
     beforeEach(function() {
         console.log("=== BEFORE EACH =====");
         sandbox = sinon.createSandbox();
-        // sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
-        //     console.log("DO DATABASE STUFF STUB!");
-        // });
+        sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
+            console.log("DO DATABASE STUFF STUB!");
+        });
+        sandbox.stub(serviceClient, 'getSensorData').callsFake((parms) => {
+            console.log("Service Client Get Sensor Data STUB!");
+            return {
+                statusCode: 200,
+                body: 'Fake Sensor Data'
+            }
+        });
     });
     
     afterEach(function() {
@@ -53,7 +59,7 @@ describe("Test Handler", function() {
         }).finally(done);
     });
 
-    it("Handler Test 2", (done) => {
+    xit("Handler Test 2", (done) => {
         let event = {
             name: 'Barney'
         }
