@@ -35,7 +35,7 @@ pipeline {
                         sh '''
                         psql --version
                         RETRIES=5
-                        CONNECT_ATTEMPT=0
+                        CONNECT_ATTEMPT=1
                         export PGPASSWORD=testpwd 
                         until psql -h dbhost -U testuser -d itdb -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
                         echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
@@ -67,6 +67,7 @@ pipeline {
                 }
             }
             steps {
+                // This is logical name of sonar server defined in Jenkins console
                 withSonarQubeEnv('kube-sonar-server') {
                     sh 'npm run sonar-scanner'
                 }
@@ -88,6 +89,7 @@ pipeline {
         stage ('Deploy App') {
             steps {
                 echo 'Running deploy stage...'
+                sh 'chmod +x build/deploy.sh && npm run deploy'
             }
         }
     }
