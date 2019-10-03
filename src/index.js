@@ -11,7 +11,7 @@ module.exports.handler = async function(event,context,callback) {
 
         let parms = {};
         let serviceResponse = await serviceClient.getSensorData(parms);
-        console.log("Got Respones From Service:\n" + JSON.stringify(serviceResponse,null,2));
+        console.log("Got Response From Service:\n" + JSON.stringify(serviceResponse,null,2));
 
         return {
             statusCode: 200,

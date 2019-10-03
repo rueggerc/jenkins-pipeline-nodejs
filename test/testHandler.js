@@ -31,9 +31,9 @@ describe("Test Handler", function() {
     beforeEach(function() {
         console.log("=== BEFORE EACH =====");
         sandbox = sinon.createSandbox();
-        sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
-            console.log("DO DATABASE STUFF STUB!");
-        });
+        // sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
+        //     console.log("DO DATABASE STUFF STUB!");
+        // });
         sandbox.stub(serviceClient, 'getSensorData').callsFake((parms) => {
             console.log("Service Client Get Sensor Data STUB!");
             return {
