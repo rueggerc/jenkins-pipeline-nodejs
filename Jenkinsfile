@@ -1,7 +1,11 @@
 pipeline {
     agent any
+    environment {
+        JOB_NAME = "Build Jenkins Pipeline for NodeJS"
+        DB_HOST = "dbhost"
+    }
     stages {
-        stage ('Build: Master') {
+        stage ('Build Master Branch') {
             when { 
                 branch 'master'
             }
@@ -11,7 +15,7 @@ pipeline {
                 sh 'npm run test'
             }
         }
-        stage ('Build: Dev') {
+        stage ('Build Feature Branch') {
             when { 
                 not { 
                   branch 'master'
@@ -21,18 +25,71 @@ pipeline {
                 echo 'Building non-master branch'
                 sh 'pwd'
                 sh 'npm install'
-                sh 'npm run test'
-                // sh 'npm config ls'
             }
         }
-        stage ('Test') {
+        stage ('Run Tests') {
             steps {
-                echo 'Running test stage...'
+                script {
+                    docker.image('rueggerc/postgres-it:1.4').withRun('-e "POSTGRES_USER=testuser" -e "POSTGRES_PASSWORD=testpwd" -e "POSTGRES_DB=itdb" -p 5432:5432') {c ->
+                      docker.image("rueggerc/postgres-it:1.4").inside("--link ${c.id}:dbhost") {
+                        sh '''
+                        psql --version
+                        RETRIES=5
+                        CONNECT_ATTEMPT=0
+                        export PGPASSWORD=testpwd 
+                        until psql -h dbhost -U testuser -d itdb -c "select 1" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+                        echo "Waiting for postgres server, $((RETRIES-=1)) remaining attempts..."
+                        echo "Attempt: $((CONNECT_ATTEMPT+=1))"
+                        sleep 1
+                        done
+                        echo "Connected to DB after retries: $CONNECT_ATTEMPT"
+                        '''
+                        // sh 'npm run pipeline-test'
+                        echo "RUN TESTS"
+                        sh 'npm run tests-in-pipeline'
+                        sh 'chmod +x build/build.sh && npm run shell-stuff'
+                      }
+                    }
+
+                    // List Files in workspace
+                    echo "LIST EVERYTHING AFTER TESTS BEGIN"
+                    sh 'chmod +x build/build.sh && npm run shell-stuff'
+                    echo "LIST EVERYTHING AFTER TESTS END"
+                   
+                }
+                
             }
         }
-        stage ('Deploy') {
+        stage ('Run SonarQube Scan') {
+            when { 
+                not { 
+                  branch 'master'
+                }
+            }
+            steps {
+                // This is logical name of sonar server defined in Jenkins console
+                withSonarQubeEnv('kube-sonar-server') {
+                    sh 'npm run sonar-scanner'
+                }
+            }
+        }
+        stage ('Check SonarQube Quality Gate') {
+            when { 
+                not { 
+                  branch 'master'
+                }
+            }
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    // Note: Webhook to Jenkins must be setup in Sonar!
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        stage ('Deploy Application Stage') {
             steps {
                 echo 'Running deploy stage...'
+                sh 'chmod +x build/deploy.sh && npm run deploy'
             }
         }
     }
