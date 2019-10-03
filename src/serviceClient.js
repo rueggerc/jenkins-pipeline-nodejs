@@ -13,9 +13,9 @@ module.exports.getSensorData = async function(parms) {
             json: false,
             resolveWithFullResponse: true
         };
-        console.log(`Connecting to Service at: ${endpoint}`);
+        console.log(`serviceClient.getSensorData connecting to Service at: ${endpoint}`);
         let serviceResponse = await requestPromise(options);
-        console.log("Client: Got Response=\n" + JSON.stringify(serviceResponse,null,2));
+        console.log("serviceClient.getSensorData Got Response=\n" + JSON.stringify(serviceResponse,null,2));
         response.statusCode = serviceResponse.statusCode;
         response.body = serviceResponse.body;
     } catch (err) {
@@ -41,8 +41,9 @@ module.exports.setSensorData = async function(parms) {
             json: true,
             resolveWithFullResponse: true
         };
-        console.log(`Connecting to Service at: ${endpoint}`);
+        console.log(`serviceClient.setSensorData connecting to Service at: ${endpoint}`);
         let serviceResponse = await requestPromise(options);
+        console.log("serviceClient.setSensorData Got Response=\n" + JSON.stringify(serviceResponse,null,2));
         response.statusCode = serviceResponse.statusCode;
     } catch (err) {
         let msg = `Service Client Error ${endpoint}`;

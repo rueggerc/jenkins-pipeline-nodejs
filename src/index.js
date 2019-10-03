@@ -5,10 +5,12 @@ const serviceClient = require('./serviceClient');
 
 module.exports.handler = async function(event,context,callback) {
     try {
-        console.log("Hello From Handler");
-        console.log("DB_TO_USE=" + process.env.DB_HOST);
+        console.log("Handler: BEGIN");
+
+        console.log("Handler: Invoke doDatabaseStuff");
         await dbutils.doDatabaseStuff();
 
+        console.log("Handler: Invoke Service Client");
         let parms = {};
         let serviceResponse = await serviceClient.getSensorData(parms);
         console.log("Got Response From Service:\n" + JSON.stringify(serviceResponse,null,2));

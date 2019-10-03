@@ -12,6 +12,7 @@
     "pipeline-test-old": "node_modules/.bin/mocha --recursive test",
     "shell-stuff": "./build/build.sh",
     "sonar-scanner": "SPAWN_WRAP_SHIM_ROOT=. node_modules/.bin/sonar-scanner",
+    "sonar-scanner-manual": "node_modules/.bin/sonar-scanner",
     "deploy": "./build/deploy.sh"
   },
   "repository": {

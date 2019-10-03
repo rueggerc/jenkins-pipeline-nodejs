@@ -9,32 +9,29 @@ const requestPromise = require('request-promise');
 
 let sandbox = null;
 describe("Test Service Client", function() {
-    // this.timeout(60000);
+    this.timeout(10000);
 
     before(async function() {
-        console.log("=== BEFORE.1 =====");
-        let parms = {
-            sensorID: "Sensor1"
-        };
     });
     after(async function() {
-        console.log("== AFTER.1 =====");
-        let parms = {
-            sensorID: "Sensor1"
-        };   
     });
 
     beforeEach(function() {
-        console.log("=== TestServiceClient BEFORE EACH =====");
         sandbox = sinon.createSandbox();
-        sandbox.stub(requestPromise, 'Request').resolves({
-            statusCode: 200,
-            body: "Dummy Response"
-        }); 
+        sandbox.stub(requestPromise, 'Request').callsFake(() => {
+            console.log("STUB For requestPromise.Request");
+            return {
+                statusCode: 200,
+                body: 'STUB Response For Service Client'
+            }
+        });
+        // sandbox.stub(requestPromise, 'Request').resolves({
+        //     statusCode: 200,
+        //     body: "STUB Response For Service Client"
+        // }); 
     });
     
     afterEach(function() {
-        console.log("=== AFTER EACH =====");
         sandbox.restore();
     });
 
@@ -43,15 +40,27 @@ describe("Test Service Client", function() {
         //     statusCode: 200,
         //     body: "Dummy Response"
         // }); 
-        // done();
         let parms = {
         };
         serviceClient.getSensorData(parms)
             .then(function(response) {
             console.log("Response=\n" + JSON.stringify(response,null,2));
             assert.equal(response.statusCode,200);
-            assert.equal(response.body,'Dummy Response');
-            console.log("Asserts Done");
+            assert.equal(response.body,'STUB Response For Service Client');
+        }).finally(done);
+    });
+
+    it("Service Client Set Sensor Data", (done) => {
+        // sandbox.stub(requestPromise, 'Request').resolves({
+        //     statusCode: 200,
+        //     body: "Dummy Response"
+        // }); 
+        let parms = {
+        };
+        serviceClient.setSensorData(parms)
+            .then(function(response) {
+            console.log("Response=\n" + JSON.stringify(response,null,2));
+            assert.equal(response.statusCode,200);
         }).finally(done);
     });
 

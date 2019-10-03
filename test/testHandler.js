@@ -10,17 +10,15 @@ const serviceClient = require("../src/serviceClient");
 
 let sandbox = null;
 describe("Test Handler", function() {
-    this.timeout(60000);
+    this.timeout(10000);
 
     before(async function() {
-        console.log("=== BEFORE.1 =====");
         let parms = {
             sensorID: "Sensor1"
         };
         return await testDBUtils.executeSQL(setupData,parms);
     });
     after(async function() {
-        console.log("== AFTER.1 =====");
         let parms = {
             sensorID: "Sensor1"
         };
@@ -32,10 +30,10 @@ describe("Test Handler", function() {
         console.log("=== BEFORE EACH =====");
         sandbox = sinon.createSandbox();
         // sandbox.stub(dbutils, 'doDatabaseStuff').callsFake((dbConfig) => {
-        //     console.log("DO DATABASE STUFF STUB!");
+        //     console.log("Invoking: doDatabaseStuff STUB");
         // });
         sandbox.stub(serviceClient, 'getSensorData').callsFake((parms) => {
-            console.log("Service Client Get Sensor Data STUB!");
+            console.log("Invoking: Service Client Get Sensor Data STUB!");
             return {
                 statusCode: 200,
                 body: 'Fake Sensor Data'
@@ -59,21 +57,11 @@ describe("Test Handler", function() {
         }).finally(done);
     });
 
-    it("Handler Test 2", (done) => {
-        let event = {
-            name: 'Barney'
-        }
-        index.handler(event,null,null)
-          .then(function(response) {
-            console.log("Response=\n" + JSON.stringify(response,null,2));
-            assert.equal(response.statusCode,200);
-        }).finally(done);
-    });
 });
 
 
 async function cleanupData(db,parms) {
-    console.log("==== CLEANUP DATA===");
+    console.log("==== CLEANUP DB DATA===");
     try {
         // Query
         let dbQuery = `
@@ -88,7 +76,7 @@ async function cleanupData(db,parms) {
 
 async function setupData(db,parms) {
     try {
-        console.log("==== SETUP DATA===");
+        console.log("==== SETUP DB DATA===");
         let notes = "Notes";
         let reading_time = null;
         let temperature = 78.33;

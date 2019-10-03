@@ -3,7 +3,7 @@ const PostgresUno = require('postgres-uno');
 
 module.exports.doDatabaseStuff = async function() {
 
-    console.log("DO DATABASE STUFF BEGIN");
+    console.log("doDatabaseStuff Connect to Host=" + process.env.DB_HOST);
     let dbConfig = builddbConfig();
     let result = await getSensorData(dbConfig);
     let rows = result.rows;
@@ -19,7 +19,7 @@ async function getSensorData(dbConfig) {
     let db = null;
     try {
 
-        console.log("getSensorData BEGIN");
+        console.log("getSensorData from DB BEGIN");
         db = new PostgresUno();
 
         console.log("CONNECT TO DB BEGIN");
