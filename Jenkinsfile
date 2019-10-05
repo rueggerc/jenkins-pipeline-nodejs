@@ -94,9 +94,9 @@ pipeline {
 
                 echo 'AWS STUFF'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'aws-key', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    echo '================= Here we go List S3 Buckets BEGIN============'
+                    echo '================= Here we go List S3 Buckets BEGIN ============'
                     AWS("--region=us-east-1 s3 ls")
-                    echo '================= Here we go List S3 Buckets BEGIN============'
+                    echo '================= Here we go List S3 Buckets END ============'
                 }
             }
         }
